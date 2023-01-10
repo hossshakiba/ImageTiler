@@ -1,0 +1,4 @@
+numpy==1.22.3
+opencv-python==4.5.5.64
+Pillow==9.1.0
+Shapely==1.8.2
