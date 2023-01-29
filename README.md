@@ -74,7 +74,7 @@ The results of the ImageTiler project show that the tool is effective at preserv
 
 # Future Work
 - Sometimes there are some issues with generating new annotations, especially when the original ones are overlapped. These exceptions are ignored now and do not intercept the tiling process. They should get handled in a better way
-- New tiling methods can be added to the project
+- New tiling methods can be added to the project.
 # Contributing
 If you are interested in contributing to the project, please follow these steps:
 1. Fork the repository
@@ -84,6 +84,6 @@ If you are interested in contributing to the project, please follow these steps:
 # License
 This project is licensed under the MIT license.
 
-Acknowledgments
+# Acknowledgments
 - The Shapely package had a crucial role in implementing this project.
 - Thank you in advance to all contributors for their time and effort in improving this project. Thank you! :heart:
