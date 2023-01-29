@@ -10,7 +10,7 @@ But it only works well with objects that require visual continuity, like humans.
 # Features
 * Three different tiling methods: default, overlapping, and padding
 * Support for annotations such as polygons and bounding boxes
-* Support building tiles from image paths, bytes, and MinIO Object Storage
+* Support building tiles from image paths, bytes, and files on MinIO Object Storage
 
 > Note: Annotations must be in COCO format
 
@@ -47,5 +47,9 @@ Here is how you can divide an image into tiles
         tiling_type="overlapping"
     )
     
-    obj.build_tiles_from_file('IMAGE_PATH').save_to_file('FOLDER_PATH')
+    obj.build_tiles_from_file('IMAGE_PATH').save_to_folder('FOLDER_PATH')
 ```
+
+## Results
+Here are two samples of ImageTiler:
+
