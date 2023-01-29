@@ -144,7 +144,7 @@ class ImageTilingFactory:
         height = bbox[3]
         return float(width * height)
 
-    def save_to_file(self, destination_path, image_file):
+    def save_to_folder(self, destination_path, image_file):
         cv2.imwrite(
             os.path.join(destination_path),
             np.asarray(image_file)
@@ -270,4 +270,4 @@ if __name__ == '__main__':
         tile_height=500,
         tiling_type="overlapping"
     )
-    obj.build_tiles_from_file('hoss.jpg').save_to_file('images')
+    obj.build_tiles_from_file('hoss.jpg').save_to_folder('images')
