@@ -33,7 +33,7 @@ Here is a sample code of using ImageTiler:
 # read image annotations (polygons or bounding boxes)
 with open('annotations.json', 'r') as file:
     polygons = json.loads(file.read())
-    
+
 # create ImageTilingFactory object with desired tiling parameters
 obj = ImageTilingFactory(
     polygons=polygons,
@@ -45,10 +45,10 @@ obj = ImageTilingFactory(
 # build the tiles
 obj.build_tiles_from_file('images/pandas.jpg')
 
-# draw new annotations on tiles and save them in tiles folder
+# draw new annotations on tiles and save them
 for image, annotation in zip(obj.tiled_image_files, obj.tiled_annotations):
     image_file, image_file_name = image[0], image[1]
-    visualize_keypoints(image_file, annotation, f'tiles/{image_file_name}')
+    visualize_keypoints(image_file, annotation, f'overlapping_tiles/{image_file_name}')
 ```
 
 ## Results
