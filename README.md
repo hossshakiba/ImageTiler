@@ -30,26 +30,41 @@ pip install -r requirements.txt
 ## Usage
 Here is how you can divide an image into tiles
 ```python
-    polygons = [
-        {'segmentation': [[13, 885, 987, 12, 947, 12, 13, 855]]},
-        {'segmentation': [[1102, 12, 13, 1423, 13, 976]]},
-        {'segmentation': [[241, 1345, 174, 1589, 13, 1589]]},
-        {'segmentation': [[2488, 12, 2285, 253, 2335, 12]]},
-        {'segmentation': [[2488, 155, 1478, 1589, 2488, 545]]},
-        {'segmentation': [[2488, 690, 1636, 1589, 1683, 1589, 2488, 717]]},
-        {'segmentation': [[2488, 929, 2003, 1589, 2488, 1584]]}
-    ]
-
-    obj = ImageTilingFactory(
-        polygons=polygons,
-        tile_width=400,
-        tile_height=500,
-        tiling_type="overlapping"
-    )
+# read image annotations (polygons or bounding boxes)
+with open('annotations.json', 'r') as file:
+    polygons = json.loads(file.read())
     
-    obj.build_tiles_from_file('IMAGE_PATH').save_to_folder('FOLDER_PATH')
+# create ImageTilingFactory object with desired tiling parameters
+obj = ImageTilingFactory(
+    polygons=polygons,
+    tile_width=650,
+    tile_height=650,
+    tiling_type="overlapping"
+)
+
+# build the tiles
+obj.build_tiles_from_file('images/pandas.jpg')
+
+# draw new annotations on tiles and save them in tiles folder
+for image, annotation in zip(obj.tiled_image_files, obj.tiled_annotations):
+    image_file, image_file_name = image[0], image[1]
+    visualize_keypoints(image_file, annotation, f'tiles/{image_file_name}')
 ```
 
 ## Results
-Here are two samples of ImageTiler:
+The results of the project are organized into different folders, each containing the results of a specific tiling method:
+* default
+* overlapping
+* padding
 
+The following annotated image is divided into tiles with different methods:
+<p class="row" float="left" align="middle">
+  <img style="width: 100%; height: auto;" src="/images/pandas.png" title="confusion matrix"/>
+</p>
+Here are four samples of generated 650 × 650 tiles with overlapping method:<br><br>
+<p class="row" align="middle">
+  <img src="/overlapping_tiles/tiled_pandas_0_350---650_1000.jpg" width="200" height="200" /> 
+  <img src="/overlapping_tiles/tiled_pandas_650_0---1300_650.jpg" width="200" height="200" />
+  <img src="/overlapping_tiles/tiled_pandas_850_0---1500_650.jpg" width="200" height="200" />
+  <img src="/overlapping_tiles/tiled_pandas_850_350---1500_1000.jpg" width="200" height="200"/>
+</p>
