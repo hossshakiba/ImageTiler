@@ -12,7 +12,6 @@ But it only works well with objects that require visual continuity, like humans.
 * Support for annotations such as polygons and bounding boxes
 * Support building tiles from image paths, bytes, and files on MinIO Object Storage
 
-> Note: Annotations must be in COCO format
 
 # Getting Started
 
@@ -28,7 +27,8 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-Here is how you can divide an image into tiles
+Here is a sample code of using ImageTiler:
+> Note: Annotations must be in COCO format
 ```python
 # read image annotations (polygons or bounding boxes)
 with open('annotations.json', 'r') as file:
@@ -68,3 +68,22 @@ Here are four samples of generated 650 × 650 tiles with overlapping method:<br>
   <img src="/overlapping_tiles/tiled_pandas_850_0---1500_650.jpg" width="200" height="200" />
   <img src="/overlapping_tiles/tiled_pandas_850_350---1500_1000.jpg" width="200" height="200"/>
 </p>
+
+# Conclusion
+The results of the ImageTiler project show that the tool is effective at preserving annotations in the resulting tiles, even for small objects in high-resolution images. The evaluation results demonstrate that the tool can support object detection in high-resolution images. Though trying different methods and tiling sizes based on your images is always suggested to get the best result.
+
+# Future Work
+- Sometimes there are some issues with generating new annotations, especially when the original ones are overlapped. These exceptions are ignored now and do not intercept the tiling process. They should get handled in a better way
+- New tiling methods can be added to the project
+# Contributing
+If you are interested in contributing to the project, please follow these steps:
+1. Fork the repository
+2. Create a new branch for your changes
+3. Commit your changes and open a pull request
+
+# License
+This project is licensed under the MIT license.
+
+Acknowledgments
+- The Shapely package had a crucial role in implementing this project.
+- Thank you in advance to all contributors for their time and effort in improving this project. Thank you! :heart:
