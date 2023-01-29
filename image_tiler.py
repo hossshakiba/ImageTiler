@@ -2,6 +2,7 @@ import copy
 import os
 import io
 from itertools import product
+import json
 
 import cv2
 import numpy as np
@@ -10,14 +11,15 @@ from shapely.geometry import Polygon, MultiPolygon, LineString
 from shapely.validation import make_valid
 
 
-def visualize_keypoints(image, keypoints, path, color=(0, 255, 0), diameter=10):
+def visualize_keypoints(image, keypoints, path, color=(0, 0, 255), diameter=5):
     image = np.asarray(image)
     for keypoint in keypoints:
         polygons = []
         while len(keypoint['segmentation'][0]) > 0:
-            x, y = keypoint['segmentation'][0].pop(0), keypoint['segmentation'][0].pop(0)
+            x, y = keypoint['segmentation'][0].pop(
+                0), keypoint['segmentation'][0].pop(0)
             polygons.append([x, y])
-            cv2.circle(image, (int(x), int(y)), diameter, (0, 255, 0), -1)
+            cv2.circle(image, (int(x), int(y)), diameter, (0, 0, 255), -1)
 
         pts = np.array(polygons, np.int32)
         image = cv2.polylines(image, [pts], True, color, 4)
@@ -117,8 +119,10 @@ class ImageTilingFactory:
 
     @staticmethod
     def bbox_health_check(bbox, width, height):
-        x_min, x_max = bbox[0] / width, (bbox[0] + bbox[2]) / width  # albumentations library format
-        y_min, y_max = bbox[1] / height, (bbox[1] + bbox[3]) / height  # albumentations library format
+        # albumentations library format
+        x_min, x_max = bbox[0] / width, (bbox[0] + bbox[2]) / width
+        # albumentations library format
+        y_min, y_max = bbox[1] / height, (bbox[1] + bbox[3]) / height
         for value in [x_min, y_min, x_max, y_max]:
             if not 0 < value <= 1:
                 return False
@@ -225,7 +229,6 @@ class ImageTilingFactory:
                         result.append(y)
             except Exception as e:
                 print(e)
-                print('#'*30)
                 continue
             if not result:
                 continue
@@ -254,20 +257,19 @@ class ImageTilingFactory:
 
 
 if __name__ == '__main__':
-    polygons = [
-        {'category_id': 12, 'segmentation': [[13, 885, 987, 12, 947, 12, 13, 855]]},
-        {'category_id': 12, 'segmentation': [[1102, 12, 13, 1423, 13, 976]]},
-        {'category_id': 12, 'segmentation': [[241, 1345, 174, 1589, 13, 1589]]},
-        {'category_id': 12, 'segmentation': [[2488, 12, 2285, 253, 2335, 12]]},
-        {'category_id': 12, 'segmentation': [[2488, 155, 1478, 1589, 2488, 545]]},
-        {'category_id': 12, 'segmentation': [[2488, 690, 1636, 1589, 1683, 1589, 2488, 717]]},
-        {'category_id': 12, 'segmentation': [[2488, 929, 2003, 1589, 2488, 1584]]}
-    ]
-
+    # read image annotations (polygons or bounding boxes)
+    with open('annotations.json', 'r') as file:
+        polygons = json.loads(file.read())
+    # create ImageTilingFactory object with desired tiling parameters
     obj = ImageTilingFactory(
         polygons=polygons,
-        tile_width=400,
-        tile_height=500,
+        tile_width=650,
+        tile_height=650,
         tiling_type="overlapping"
     )
-    obj.build_tiles_from_file('hoss.jpg').save_to_folder('images')
+    # build the tiles
+    obj.build_tiles_from_file('images/pandas.jpg')
+    # draw new annotations on tiles and save them in tiles folder
+    for image, annotation in zip(obj.tiled_image_files, obj.tiled_annotations):
+        image_file, image_file_name = image[0], image[1]
+        visualize_keypoints(image_file, annotation, f'tiles/{image_file_name}')
