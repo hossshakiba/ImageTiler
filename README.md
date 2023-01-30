@@ -73,7 +73,7 @@ Here are four samples of generated 650 × 650 tiles with overlapping method:<br>
 The results of the ImageTiler project show that the tool is effective at preserving annotations in the resulting tiles, even for small objects in high-resolution images. The evaluation results demonstrate that the tool can support object detection in high-resolution images. Though trying different methods and tiling sizes based on your images is always suggested to get the best result.
 
 # Future Work
-- Sometimes there are some issues with generating new annotations, especially when the original ones are overlapped. These exceptions are ignored now and do not intercept the tiling process. They should get handled in a better way
+- Sometimes there are some issues with generating new annotations, especially when the original ones are overlapped. These exceptions are ignored now and do not intercept the tiling process. They should get handled in a better way.
 - New tiling methods can be added to the project.
 # Contributing
 If you are interested in contributing to the project, please follow these steps:
