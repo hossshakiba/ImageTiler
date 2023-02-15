@@ -1,11 +1,9 @@
 # ImageTiler
-A project for dividing images into 𝑚 × 𝑛 tiles while keeping their annotations
-(polygons, Bounding boxes) in the correct form. Image tiling is typically used
-for detecting small objects in high-resolution images. Some segmentation algorithms only accept
-fixed picture sizes. In these cases, we resize the picture by default which might end up in a loss of details. 
-Tiling images helps preserve the details but breaks down your image into smaller tiles. 
-This option works best when your objects' micro and macro visual features are very similar, i.e., Cracks, Corrosion, etc. 
-But it only works well with objects that require visual continuity, like humans.<br>
+This project aims to develop an image tiling system that can divide high-resolution images into 𝑚 × 𝑛 tiles while preserving their annotations, including polygons and bounding boxes. Image tiling is an important technique for object detection and segmentation in computer vision. By dividing large images into smaller tiles, this technique can improve the accuracy and efficiency of object detection, particularly for detecting small objects in high-resolution images.
+
+The system will be designed to support different input image formats and annotation types. The user can specify the size of the tiles and the overlap between them. The system will then automatically generate the tiled images and preserve the original annotations in each tile. The annotations will be adjusted to account for the relative position of the tile within the original image.
+
+The system will be particularly useful for segmentation algorithms that require fixed picture sizes. By preserving the annotations in each tile, the system will help to maintain the accuracy of the segmentation. Moreover, the system will allow users to preserve important details in high-resolution images that might be lost when using other image processing techniques.
 
 # Features
 * Three different tiling methods: default, overlapping, and padding
